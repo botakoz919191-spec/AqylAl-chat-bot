@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<title>AqylAl Web Chatbot</title>
+<style>
+body { font-family: Arial; display: flex; justify-content: center; padding: 40px; background:#f2f2f2; }
+.chatbox { width: 420px; background:#fff; border: 1px solid #ccc; padding: 20px; border-radius: 15px; box-shadow:0 0 10px #aaa; }
+#messages { height: 350px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; background:#fafafa; }
+.msg { margin: 10px 0; }
+.user { color: blue; font-weight: bold; }
+.bot { color: green; }
+</style>
+</head>
+
+<body>
+<div class="chatbox">
+<h2>AqylAl ChatBot</h2>
+<div id="messages"></div>
+<input id="input" type="text" placeholder="Сұрағыңызды жазыңыз..." style="width:100%; padding:10px;">
+</div>
+
+<script>
+
+// ---- Пәндік + өмірлік сұрақ-жауап базасы ----
+const qa = {
+    "python не": "Python — өте жеңіл әрі қуатты программалау тілі.",
+    "файл деген": "Файл — компьютердегі ақпарат сақталатын орын.",
+    "алгоритм": "Алгоритм — белгілі бір тапсырманы орындау үшін берілген қадамдар тізбегі.",
+    "жасанды интеллект": "ЖИ — адамның ойлауын модельдеп, өздігінен шешім шығаратын технология.",
+    "көпмүшелік": "Көпмүшелік — айнымалысы бар бірнеше мүшеден құралған өрнек.",
+    "жер неге дөңгелек": "Гравитация әсерінен Жер сфера тәрізді формаға ие.",
+    "күн неге ыстық": "Күн — үлкен ядролық реактор, оның ішінде сутек гелийге айналады."
+};
+
+// ---- Боттың логикасы ----
+function reply(question) {
+    question = question.toLowerCase();
+    for (let key in qa) {
+        if (question.includes(key)) return qa[key];
+    }
+    return "Бұл сұрақ базаға тіркелмеген. Басқа сұрақ қойып көріңіз.";
+}
+
+// ---- UI ----
+let input = document.getElementById("input");
+let messages = document.getElementById("messages");
+
+input.addEventListener("keydown", function(e) {
+    if (e.key === "Enter") {
+        let q = input.value;
+        messages.innerHTML += `<div class='msg user'>🧑: ${q}</div>`;
+        messages.innerHTML += `<div class='msg bot'>🤖: ${reply(q)}</div>`;
+        input.value = "";
+        messages.scrollTop = messages.scrollHeight;
+    }
+});
+</script>
+
+</body>
+</html>
